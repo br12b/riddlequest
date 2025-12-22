@@ -1,7 +1,7 @@
 import React from 'react';
 import { RiddleData } from '../types';
 import { GenerativeCanvas } from './GenerativeCanvas';
-import { EyeIcon, CpuChipIcon } from '@heroicons/react/24/solid';
+import { CpuChipIcon } from '@heroicons/react/24/solid';
 
 interface Props {
   riddle: RiddleData;
