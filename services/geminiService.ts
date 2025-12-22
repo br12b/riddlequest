@@ -1,7 +1,18 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { RiddleData, ValidationResponse, LanguageCode } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Safe initialization
+let ai: GoogleGenAI | null = null;
+try {
+  // @ts-ignore
+  if (process.env.API_KEY) {
+    ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  } else {
+    console.warn("Gemini API Key is missing! Check your Vercel Environment Variables.");
+  }
+} catch (error) {
+  console.error("Failed to initialize Gemini Client", error);
+}
 
 const riddleSchema: Schema = {
   type: Type.OBJECT,
@@ -48,6 +59,22 @@ const riddleSchema: Schema = {
 };
 
 export const generateDailyRiddle = async (lang: LanguageCode): Promise<RiddleData> => {
+  if (!ai) {
+    console.error("Gemini AI instance is not initialized. Missing API Key?");
+    // Return a dummy error riddle so the UI doesn't crash
+    return {
+      id: "error-missing-key",
+      question: "System Failure: API Key Missing",
+      visualConfig: {
+        colors: ["#ff0000", "#000000", "#ff0000"],
+        animationSpeed: "chaos",
+        shapeStyle: "sharp",
+        complexity: "minimal"
+      },
+      difficulty: "Hard",
+    };
+  }
+
   try {
     const languageNames = {
       en: "English",
@@ -115,6 +142,8 @@ export const generateDailyRiddle = async (lang: LanguageCode): Promise<RiddleDat
 };
 
 export const validateAnswerWithAI = async (riddleQuestion: string, userAnswer: string, lang: LanguageCode): Promise<ValidationResponse> => {
+  if (!ai) return { isCorrect: false, explanation: "API Key Missing" };
+
   try {
     const languageNames = {
       en: "English",

@@ -192,6 +192,7 @@ export default function App() {
           setFeedback('');
         }
       } catch (e) {
+        console.error("Critical Error fetching riddle:", e);
         if (isMounted) {
           setGameState(GameState.ERROR);
           setIsRiddleLoading(false);
