@@ -1,5 +1,5 @@
 {
   "name": "CryptoRiddle Quest",
-  "description": "A Farcaster-ready mini-app where users solve daily AI-generated riddles. Pay a small fee to enter, solve it first, and win the daily prize pool.",
+  "description": "A Farcaster-ready mini-app where users solve daily AI-generated riddles. Free to play, earn XP, and climb the global leaderboard.",
   "requestFramePermissions": []
 }
