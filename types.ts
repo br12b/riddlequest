@@ -1,3 +1,4 @@
+
 export type LanguageCode = 'en' | 'fr' | 'es' | 'tr';
 
 export interface VisualConfig {
@@ -23,16 +24,13 @@ export enum GameState {
   LOADING = 'LOADING',
   IDLE = 'IDLE', 
   SUBMITTING = 'SUBMITTING', 
-  WON = 'WON',      // Puzzle solved, waiting to claim
-  CLAIMING = 'CLAIMING', // Transaction in progress
-  CLAIMED = 'CLAIMED',   // Funds transferred
+  WON = 'WON',      // Puzzle solved
   LOST = 'LOST', 
   ERROR = 'ERROR'
 }
 
 export interface WalletState {
   address: string | null;
-  balance: number;
   isConnected: boolean;
 }
 
@@ -40,4 +38,11 @@ export interface ActivityLog {
   id: number;
   text: string;
   type: 'entry' | 'win' | 'fail';
+}
+
+export interface LeaderboardEntry {
+  rank: number;
+  address: string;
+  score: number;
+  badges: string[]; // e.g., ["🏆", "🔥"]
 }
